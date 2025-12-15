@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VynUi - Jumpscare Edition</title>
+    <style>
+        /* Gaya Dasar VynUi */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #121212; 
+            color: #E0E0E0; 
+            padding: 20px;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden; /* Penting untuk jumpscare */
+        }
+
+        /* Container Utama */
+        .vyn-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #1E1E1E;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Judul VynUi */
+        .vyn-header {
+            color: #00AEEF; 
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Tombol Aksi */
+        .vyn-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #FF4500; /* Warna Merah untuk Jumpscare */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s;
+        }
+        
+        /* --- STYLE JUMPSCARE --- */
+        #jumpscare-container {
+            position: fixed; /* Membuatnya menutupi seluruh layar */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: none; /* Awalnya tersembunyi */
+            z-index: 9999; /* Pastikan di atas segalanya */
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #jumpscare-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vyn-container">
+        <h2 class="vyn-header">VynUi Panel</h2>
+        
+        <p>Tekan tombol di bawah ini untuk memulai proses yang sangat penting!</p>
+
+        <button class="vyn-button" onclick="aktifkanJumpscare()">
+            🚨 TEKAN UNTUK PROSES PENTING 🚨
+        </button>
+
+        <h3>Status:</h3>
+        <div id="status-area">Menunggu Aksi...</div>
+    </div>
+
+    <div id="jumpscare-container">
+        <img id="jumpscare-img" src="jumpscare.png" alt="Jumpscare Image">
+    </div>
+
+    <audio id="jumpscare-audio" src="scream.mp3" preload="auto"></audio>
+    
+    <script>
+        // Fungsi utama untuk mengaktifkan jumpscare
+        function aktifkanJumpscare() {
+            const container = document.getElementById('jumpscare-container');
+            const audio = document.getElementById('jumpscare-audio');
+            const statusArea = document.getElementById('status-area');
+
+            // 1. Tampilkan Gambar Secara Tiba-Tiba
+            container.style.display = 'flex';
+            
+            // 2. Putar Suara (Hanya jika file audio tersedia)
+            audio.play().catch(error => {
+                statusArea.innerHTML = "Status: <strong>Gagal memutar audio! Pastikan file 'scream.mp3' ada.</strong>";
+            });
+            
+            statusArea.innerHTML = "Status: <strong>Jumpscare Aktif!</strong>";
+
+            // Opsional: Sembunyikan Jumpscare setelah beberapa detik
+            setTimeout(() => {
+                container.style.display = 'none';
+                statusArea.innerHTML = "Status: <strong>Siap untuk aksi selanjutnya.</strong>";
+            }, 2000); // 2000 milidetik = 2 detik
+        }
+    </script>
+</body>
+</html>
